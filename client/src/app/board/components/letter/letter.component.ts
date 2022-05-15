@@ -13,4 +13,8 @@ export class LetterComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  setValue(value?: string): void {
+    this.value = value;
+  }
+
 }

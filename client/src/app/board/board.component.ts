@@ -1,4 +1,6 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { BOARD_LENGTH, WORD_LENGTH } from './board.constants';
+import { WordComponent } from './components/word/word.component';
 
 @Component({
   selector: 'app-board',
@@ -6,22 +8,34 @@ import { Component, HostListener, OnInit } from '@angular/core';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit {
-  currentWordIndex: number = 0;
+  iterator: number[] = Array(BOARD_LENGTH).fill(0);
+  currWordIndex: number = 0;
+
+  @ViewChildren('words') words!: QueryList<WordComponent>;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
-  @HostListener('document:keypress', ['$event'])
+  @HostListener('document:keydown', ['$event'])
   handleKeypress(event: KeyboardEvent): void {
-    console.log(event);
-    if (event.key.match(/[a-zA-Z]/)) {
-      
+    const word: WordComponent = this.words.get(this.currWordIndex)!;
+    if (event.key.match(/[a-z]/i) && event.key.length == 1) {
+      word.insertLetter(event.key.toUpperCase());
+    }
+    else if (event.key == 'Backspace') {
+      word.deleteLetter();
     }
     else if (event.key == 'Enter') {
-
+      if (word.currLetterIndex == WORD_LENGTH) {
+        this.currWordIndex++;
+      }
     }
+  }
+
+  nextWord(): void {
+    this.currWordIndex++;
   }
 
 }

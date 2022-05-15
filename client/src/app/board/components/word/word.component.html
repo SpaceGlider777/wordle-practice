@@ -1,7 +1,3 @@
 <div class="letter-container">
-    <app-letter></app-letter>
-    <app-letter></app-letter>
-    <app-letter></app-letter>
-    <app-letter></app-letter>
-    <app-letter></app-letter>
+    <app-letter *ngFor="let letter of iterator" #letters></app-letter>
 </div>
