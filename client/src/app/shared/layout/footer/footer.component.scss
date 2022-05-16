@@ -1,7 +1,16 @@
 footer {
     position: absolute;
     bottom: 0;
-    height: 3px;
+    height: 4rem;
     width: 100%;
-    background-color: aquamarine;
+    background-color: #252525;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+fa-icon {
+    color: white;
+    font-size: 18pt;
+    margin: 10px;
 }

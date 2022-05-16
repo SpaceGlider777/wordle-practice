@@ -1,20 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-letter',
   templateUrl: './letter.component.html',
-  styleUrls: ['./letter.component.scss']
+  styleUrls: ['./letter.component.scss'],
+  animations: [
+    trigger('revealLetter', [
+      state('unrevealed', style({})),
+      state('revealed', style({
+        backgroundColor: '{{ background_color }}'
+      }), { params: { background_color: '' } }),
+      transition('unrevealed => revealed', [
+        animate('1s')
+      ])
+    ])
+  ]
 })
 export class LetterComponent implements OnInit {
   value?: string;
+  backgroundColor: string = '';
+
+  @Input() isRevealed: boolean = false;
 
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  setValue(value?: string): void {
-    this.value = value;
   }
 
 }
