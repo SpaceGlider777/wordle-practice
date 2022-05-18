@@ -1,4 +1,7 @@
+import { HttpParams } from '@angular/common/http';
 import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Observable } from 'rxjs';
+import { ApiService } from 'src/app/core/services/api.service';
 import { WORD_LENGTH } from '../../board.constants';
 import { LetterComponent } from '../letter/letter.component';
 
@@ -14,7 +17,7 @@ export class WordComponent implements OnInit {
 
   @ViewChildren('letters') letters!: QueryList<LetterComponent>;
 
-  constructor() { }
+  constructor(private apiService: ApiService) { }
 
   ngOnInit(): void {
   }
@@ -27,6 +30,11 @@ export class WordComponent implements OnInit {
     });
 
     return word;
+  }
+
+  wordExists(): Observable<any> {
+    const params = new HttpParams().set('value', this.getWord());
+    return this.apiService.getByQuery('Words', params);
   }
 
   revealWord(answer: string): void {

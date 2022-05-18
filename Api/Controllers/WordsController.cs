@@ -14,34 +14,53 @@ public class WordsController : ControllerBase
         _context = context;
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public ActionResult<List<Word>> GetAll()
     {
         return Ok(_context.Set<Word>().ToList());
     }
 
+    [HttpGet("count")]
+    public ActionResult<List<Word>> GetCount()
+    {
+        return Ok(_context.Set<Word>().Count());
+    } 
+
     [HttpGet("{id}")]
     public ActionResult<Word> GetById(int id)
     {
-        var Word = _context.Set<Word>().Find(id);
+        var word = _context.Set<Word>().Find(id);
         
-        if (Word == null)
+        if (word == null)
         {
             return NotFound();
         }
 
-        return Ok(Word);
+        return Ok(word);
+    }
+
+    [HttpGet]
+    public ActionResult<Word> GetByValue([FromQuery] string value)
+    {
+        var word = _context.Set<Word>().SingleOrDefault(word => word.Value == value);
+
+        if (word == null)
+        {
+            return NotFound();
+        }
+
+        return Ok(word);
     }
 
     [HttpPost]
-    public ActionResult<Word> Post([FromBody] Word Word)
+    public ActionResult<Word> Post([FromBody] Word word)
     {
-        if (Word == null)
+        if (word == null)
         {
             return BadRequest();
         }
 
-        return Ok(_context.Set<Word>().Add(Word));
+        return Ok(_context.Set<Word>().Add(word));
     }
 
     [HttpPut("{id}")]
@@ -52,9 +71,9 @@ public class WordsController : ControllerBase
             return BadRequest();
         }
 
-        var Word = _context.Set<Word>().Find(id);
+        var word = _context.Set<Word>().Find(id);
 
-        if (Word == null)
+        if (word == null)
         {
             return NotFound();
         }
@@ -65,13 +84,13 @@ public class WordsController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var Word = _context.Set<Word>().Find(id);
+        var word = _context.Set<Word>().Find(id);
 
-        if (Word == null)
+        if (word == null)
         {
             return NotFound();
         }
 
-        return Ok(_context.Set<Word>().Remove(Word));
+        return Ok(_context.Set<Word>().Remove(word));
     }
 }

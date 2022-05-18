@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 
@@ -12,6 +12,22 @@ export class ApiService {
 
   get(path: string): Observable<any> {
     return this.httpClient.get(this.url + path).pipe(
+      catchError(err => {
+        return throwError(() => err);
+      })
+    );
+  }
+
+  getCount(path: string): Observable<any> {
+    return this.httpClient.get(this.url + path + '/count').pipe(
+      catchError(err => {
+        return throwError(() => err);
+      })
+    );
+  }
+
+  getByQuery(path: string, params: HttpParams): Observable<any> {
+    return this.httpClient.get(this.url + path, { params: params }).pipe(
       catchError(err => {
         return throwError(() => err);
       })
