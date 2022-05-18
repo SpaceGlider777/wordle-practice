@@ -1,7 +1,7 @@
 # Wordle Practice
 
 ## Overview
-A web application for practicing the popular game word game Wordle. Created using Angular 13 and .NET 6 Web API. Data such as user and word information are stored locally in a MSSQL database. Webster's English Dictionary was used for all possible word choices.
+A web application for practicing the popular word game Wordle. Created using Angular 13 and .NET 6 Web API. Data such as user and word information are stored locally in a MSSQL database. Webster's English Dictionary was used for all possible word choices.
 
 ## Setup
 To run the Angular client go to the Client folder and run the command `ng serve`. To run the Web API go to the Api folder and run the command `dotnet run`.
