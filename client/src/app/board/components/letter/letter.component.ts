@@ -21,7 +21,7 @@ export class LetterComponent implements OnInit {
   value?: string;
   backgroundColor: string = '';
 
-  @Input() isRevealed: boolean = false;
+  @Input() isRevealed!: boolean;
 
   constructor() { }
 

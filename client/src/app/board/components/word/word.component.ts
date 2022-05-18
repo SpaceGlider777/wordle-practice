@@ -34,10 +34,12 @@ export class WordComponent implements OnInit {
     const answerMap: AnswerMap = {};
 
     for (let i = 0; i < answer.length; i++) {
-      if (!answerMap[answer.charAt(i)])
+      if (!answerMap[answer.charAt(i)]) {
         answerMap[answer.charAt(i)] = 1;
-      else
+      }
+      else {
         answerMap[answer.charAt(i)]++;
+      }
     }
 
     // Check for letters in the correct spot first
