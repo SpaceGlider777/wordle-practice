@@ -1,6 +1,6 @@
 # Wordle Practice
 
-![Sample Image](../client/src/assets/sample-img.png)
+![Sample Image](../client/src/assets/sample-image.png)
 
 ## Overview
 A web application for practicing the popular word game Wordle. Created using Angular 13 and .NET 6 Web API. Data such as user and word information are stored locally in a MSSQL database. Webster's English Dictionary was used for all possible word choices.
