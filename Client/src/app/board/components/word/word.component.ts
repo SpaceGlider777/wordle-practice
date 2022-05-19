@@ -38,7 +38,6 @@ export class WordComponent implements OnInit {
   }
 
   revealWord(answer: string): void {
-    let index: number = 0;
     const answerMap: AnswerMap = {};
 
     for (let i = 0; i < answer.length; i++) {
@@ -50,6 +49,7 @@ export class WordComponent implements OnInit {
       }
     }
 
+    let index: number = 0;
     // Check for letters in the correct spot first
     this.letters.forEach((letter: LetterComponent) => {
       if (answer.charAt(index) == letter.value) {
@@ -60,7 +60,6 @@ export class WordComponent implements OnInit {
     });
 
     // Then check for letters in the wrong spot
-    index = 0;
     this.letters.forEach((letter: LetterComponent) => {
       if (answerMap[letter.value!]) {
         letter.backgroundColor = '#FBC02D';
