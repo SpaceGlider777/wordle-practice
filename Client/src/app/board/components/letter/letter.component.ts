@@ -9,7 +9,8 @@ import { Component, Input, OnInit } from '@angular/core';
     trigger('revealLetter', [
       state('unrevealed', style({})),
       state('revealed', style({
-        backgroundColor: '{{ background_color }}'
+        backgroundColor: '{{ background_color }}',
+        transform: 'rotateX(180deg)'
       }), { params: { background_color: '' } }),
       transition('unrevealed => revealed', [
         animate('1s')

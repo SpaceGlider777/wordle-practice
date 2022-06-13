@@ -1,3 +1,4 @@
 <div class="container" [@revealLetter]="{ value: isRevealed ? 'revealed' : 'unrevealed', params: { background_color: backgroundColor } }" >
-    <span class="letter">{{ value }}</span>
+    <span class="letter front">{{ value }}</span>
+    <span class="letter back">{{ value }}</span>
 </div>

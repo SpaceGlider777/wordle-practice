@@ -61,7 +61,7 @@ export class WordComponent implements OnInit {
 
     // Then check for letters in the wrong spot
     this.letters.forEach((letter: LetterComponent) => {
-      if (answerMap[letter.value!]) {
+      if (answerMap[letter.value!] && !letter.backgroundColor) {
         letter.backgroundColor = '#FBC02D';
         answerMap[letter.value!]--;
       }

@@ -8,4 +8,14 @@
     color: white;
     text-align: center;
     font-size: 20pt;
+    transform-style: preserve-3d;
+}
+
+.letter {
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.back {
+    transform: rotateX(180deg);
 }
