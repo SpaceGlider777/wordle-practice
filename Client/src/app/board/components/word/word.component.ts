@@ -67,7 +67,12 @@ export class WordComponent implements OnInit {
       }
     });
 
-    this.isRevealed = true;
+    // Reveal each letter 0.5 seconds apart
+    let timeoutIndex: number = 0;
+    this.letters.forEach((letter: LetterComponent) => {
+      setTimeout(() => { letter.isRevealed = true }, 200 * timeoutIndex);
+      timeoutIndex++;
+    });
   }
 
   insertLetter(letter: string): void {
@@ -82,6 +87,15 @@ export class WordComponent implements OnInit {
       this.letters.get(this.currLetterIndex - 1)!.value = undefined;
       this.currLetterIndex--;
     }
+  }
+
+  clearWord(): void {
+    this.letters.forEach((letter: LetterComponent) => {
+      letter.backgroundColor = '';
+      letter.value = undefined;
+      letter.isRevealed = false;
+    });
+    this.currLetterIndex = 0;
   }
 
 }

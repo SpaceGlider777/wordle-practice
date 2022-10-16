@@ -1,3 +1,7 @@
 <div class="word-container">
     <app-word *ngFor="let word of iterator" #words></app-word>
 </div>
+
+<div class="btn-container" *ngIf="isGameOver">
+    <button mat-raised-button color="accent" (click)="restart()">Try Again</button>
+</div>

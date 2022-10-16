@@ -21,8 +21,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class LetterComponent implements OnInit {
   value?: string;
   backgroundColor: string = '';
-
-  @Input() isRevealed!: boolean;
+  isRevealed: boolean = false;
 
   constructor() { }
 

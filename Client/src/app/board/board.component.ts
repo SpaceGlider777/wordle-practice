@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { switchMap } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { Word } from '../core/models/word';
 import { ApiService } from '../core/services/api.service';
 import { NotificationService } from '../core/services/notification.service';
@@ -22,14 +22,18 @@ export class BoardComponent implements OnInit {
   constructor(private notificationService: NotificationService, private apiService: ApiService) { }
 
   ngOnInit(): void {
-    this.apiService.getCount('Words').pipe(
+    this.getWord().subscribe((word: Word) => {
+      this.answer = word.value.toUpperCase();
+    });
+  }
+
+  getWord(): Observable<any> {
+    return this.apiService.getCount('Words').pipe(
       switchMap((count: number) => {
         const randomIndex = Math.floor(Math.random() * count);
         return this.apiService.getById('Words', randomIndex);
       })
-    ).subscribe((word: Word) => {
-      this.answer = word.value.toUpperCase();
-    });
+    );
   }
 
   @HostListener('document:keydown', ['$event'])
@@ -67,6 +71,17 @@ export class BoardComponent implements OnInit {
         });
       }
     }
+  }
+
+  restart(): void {
+    this.getWord().subscribe((word: Word) => {
+      this.answer = word.value.toUpperCase();
+      this.words.forEach((word: WordComponent) => {
+        word.clearWord();
+      });
+      this.currWordIndex = 0;
+      this.isGameOver = false;
+    });
   }
 
 }

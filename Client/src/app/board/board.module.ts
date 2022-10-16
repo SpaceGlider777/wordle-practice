@@ -5,6 +5,7 @@ import { BoardRoutingModule } from './board-routing.module';
 import { BoardComponent } from './board.component';
 import { WordComponent } from './components/word/word.component';
 import { LetterComponent } from './components/letter/letter.component';
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { LetterComponent } from './components/letter/letter.component';
   ],
   imports: [
     CommonModule,
-    BoardRoutingModule
+    BoardRoutingModule,
+    MatButtonModule
   ]
 })
 export class BoardModule { }
