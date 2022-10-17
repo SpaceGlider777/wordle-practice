@@ -28,10 +28,10 @@ export class BoardComponent implements OnInit {
   }
 
   getWord(): Observable<any> {
-    return this.apiService.getCount('Words').pipe(
+    return this.apiService.getCount('AnswerWords').pipe(
       switchMap((count: number) => {
         const randomIndex = Math.floor(Math.random() * count);
-        return this.apiService.getById('Words', randomIndex);
+        return this.apiService.getById('AnswerWords', randomIndex);
       })
     );
   }

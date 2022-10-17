@@ -34,7 +34,7 @@ export class WordComponent implements OnInit {
 
   wordExists(): Observable<any> {
     const params = new HttpParams().set('value', this.getWord());
-    return this.apiService.getByQuery('Words', params);
+    return this.apiService.getByQuery('AcceptedWords', params);
   }
 
   revealWord(answer: string): void {
@@ -67,7 +67,7 @@ export class WordComponent implements OnInit {
       }
     });
 
-    // Reveal each letter 0.5 seconds apart
+    // Reveal each letter 0.2 seconds apart
     let timeoutIndex: number = 0;
     this.letters.forEach((letter: LetterComponent) => {
       setTimeout(() => { letter.isRevealed = true }, 200 * timeoutIndex);
@@ -89,6 +89,9 @@ export class WordComponent implements OnInit {
     }
   }
 
+  /**
+   * Called when user restarts game
+   */
   clearWord(): void {
     this.letters.forEach((letter: LetterComponent) => {
       letter.backgroundColor = '';

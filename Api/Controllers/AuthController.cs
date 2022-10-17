@@ -35,9 +35,9 @@ public class AuthController : ControllerBase
         
         return Ok();
     }
-
-    [HttpGet]
-    public ActionResult Get()
+    
+    [HttpPost("login")]
+    public async Task<IActionResult> Login([FromBody] RegisterModel model)
     {
         return Ok();
     }

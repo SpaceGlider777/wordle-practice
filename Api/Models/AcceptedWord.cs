@@ -1,6 +1,6 @@
 namespace Api.Models;
 
-public class Word
+public class AcceptedWord
 {
     public int Id { get; set; }
     public string? Value { get; set; }

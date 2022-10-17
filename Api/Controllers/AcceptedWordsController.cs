@@ -5,31 +5,31 @@ namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class WordsController : ControllerBase
+public class AcceptedWordsController : ControllerBase
 {
     private readonly WordlePracticeDbContext _context;
 
-    public WordsController(WordlePracticeDbContext context)
+    public AcceptedWordsController(WordlePracticeDbContext context)
     {
         _context = context;
     }
 
     [HttpGet("all")]
-    public ActionResult<List<Word>> GetAll()
+    public ActionResult<List<AcceptedWord>> GetAll()
     {
-        return Ok(_context.Set<Word>().ToList());
+        return Ok(_context.AcceptedWords.ToList());
     }
 
     [HttpGet("count")]
-    public ActionResult<List<Word>> GetCount()
+    public ActionResult<List<AcceptedWord>> GetCount()
     {
-        return Ok(_context.Set<Word>().Count());
+        return Ok(_context.AcceptedWords.Count());
     } 
 
     [HttpGet("{id}")]
-    public ActionResult<Word> GetById(int id)
+    public ActionResult<AcceptedWord> GetById(int id)
     {
-        var word = _context.Set<Word>().Find(id);
+        var word = _context.AcceptedWords.Find(id);
         
         if (word == null)
         {
@@ -40,9 +40,9 @@ public class WordsController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<Word> GetByValue([FromQuery] string value)
+    public ActionResult<AcceptedWord> GetByValue([FromQuery] string value)
     {
-        var word = _context.Set<Word>().SingleOrDefault(word => word.Value == value);
+        var word = _context.AcceptedWords.SingleOrDefault(word => word.Value == value);
 
         if (word == null)
         {
@@ -53,25 +53,25 @@ public class WordsController : ControllerBase
     }
 
     [HttpPost]
-    public ActionResult<Word> Post([FromBody] Word word)
+    public ActionResult<AcceptedWord> Post([FromBody] AcceptedWord word)
     {
         if (word == null)
         {
             return BadRequest();
         }
 
-        return Ok(_context.Set<Word>().Add(word));
+        return Ok(_context.AcceptedWords.Add(word));
     }
 
     [HttpPut("{id}")]
-    public ActionResult<Word> Put(int id, [FromBody] Word updatedWord)
+    public ActionResult<AcceptedWord> Put(int id, [FromBody] AcceptedWord updatedWord)
     {
         if (updatedWord == null)
         {
             return BadRequest();
         }
 
-        var word = _context.Set<Word>().Find(id);
+        var word = _context.AcceptedWords.Find(id);
 
         if (word == null)
         {
@@ -84,13 +84,13 @@ public class WordsController : ControllerBase
     [HttpDelete("{id}")]
     public ActionResult Delete(int id)
     {
-        var word = _context.Set<Word>().Find(id);
+        var word = _context.AcceptedWords.Find(id);
 
         if (word == null)
         {
             return NotFound();
         }
 
-        return Ok(_context.Set<Word>().Remove(word));
+        return Ok(_context.AcceptedWords.Remove(word));
     }
 }

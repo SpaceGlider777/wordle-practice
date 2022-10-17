@@ -64,3 +64,4 @@ C:\Users\stanl\dev\wordle-practice\Api\bin\Debug\net6.0\Microsoft.AspNetCore.Cry
 C:\Users\stanl\dev\wordle-practice\Api\bin\Debug\net6.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
 C:\Users\stanl\dev\wordle-practice\Api\bin\Debug\net6.0\Microsoft.Extensions.Identity.Core.dll
 C:\Users\stanl\dev\wordle-practice\Api\bin\Debug\net6.0\Microsoft.Extensions.Identity.Stores.dll
+C:\Users\stanl\dev\wordle-practice\Api\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

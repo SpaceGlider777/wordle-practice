@@ -11,6 +11,7 @@ namespace Api.Models
         {
         }
 
-        public DbSet<Word> Words { get; set; } = null!;
+        public DbSet<AcceptedWord> AcceptedWords { get; set; } = null!;
+        public DbSet<AnswerWord> AnswerWords { get; set; } = null!;
     }
 }
