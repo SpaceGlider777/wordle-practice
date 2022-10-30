@@ -1,8 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { Word } from '../core/models/word';
 import { ApiService } from '../core/services/api.service';
 import { NotificationService } from '../core/services/notification.service';
+import { PauseGameService } from '../core/services/pause-game.service';
 import { BOARD_LENGTH, WORD_LENGTH } from './board.constants';
 import { WordComponent } from './components/word/word.component';
 
@@ -16,15 +18,29 @@ export class BoardComponent implements OnInit {
   currWordIndex: number = 0;
   isGameOver: boolean = false;
   answer?: string;
+  keyboard: number[] = [];
+  letterColors = ['unset', '#FBC02D', '#388E3C', '#D50000'];
 
   @ViewChildren('words') words!: QueryList<WordComponent>;
 
-  constructor(private notificationService: NotificationService, private apiService: ApiService) { }
+  constructor(
+    private notificationService: NotificationService, 
+    private apiService: ApiService,
+    private pauseGameService: PauseGameService
+    ) { }
 
   ngOnInit(): void {
     this.getWord().subscribe((word: Word) => {
       this.answer = word.value.toUpperCase();
     });
+
+    this.resetKeyboard();
+  }
+
+  resetKeyboard(): void {
+    for (let i = 0; i < 26; i++) {
+      this.keyboard[i] = LetterStatus.UNKNOWN;
+    }
   }
 
   getWord(): Observable<any> {
@@ -38,7 +54,7 @@ export class BoardComponent implements OnInit {
 
   @HostListener('document:keydown', ['$event'])
   handleKeypress(event: KeyboardEvent): void {
-    if (!this.answer || this.isGameOver)
+    if (!this.answer || this.isGameOver || this.pauseGameService.isGamePaused)
       return;
 
     const word: WordComponent = this.words.get(this.currWordIndex)!;
@@ -66,8 +82,10 @@ export class BoardComponent implements OnInit {
           }
           
           this.currWordIndex++;
-        }, () => {
-          this.notificationService.show('Word does not exist');
+        }, (error: HttpErrorResponse) => {
+          if (error.status == 404) {
+            this.notificationService.show('Word does not exist');
+          }
         });
       }
     }
@@ -82,6 +100,15 @@ export class BoardComponent implements OnInit {
       this.currWordIndex = 0;
       this.isGameOver = false;
     });
+
+    this.resetKeyboard();
   }
 
+}
+
+export enum LetterStatus {
+  UNKNOWN,
+  YELLOW,
+  GREEN,
+  INCORRECT
 }

@@ -1,7 +1,8 @@
 import { HttpParams } from '@angular/common/http';
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api.service';
+import { LetterStatus } from '../../board.component';
 import { WORD_LENGTH } from '../../board.constants';
 import { LetterComponent } from '../letter/letter.component';
 
@@ -11,6 +12,7 @@ import { LetterComponent } from '../letter/letter.component';
   styleUrls: ['./word.component.scss']
 })
 export class WordComponent implements OnInit {
+  @Input() keyboard!: number[];
   iterator: number[] = Array(WORD_LENGTH).fill(0);
   currLetterIndex: number = 0;
   isRevealed: boolean = false;
@@ -54,6 +56,7 @@ export class WordComponent implements OnInit {
     this.letters.forEach((letter: LetterComponent) => {
       if (answer.charAt(index) == letter.value) {
         letter.backgroundColor = '#388E3C';
+        this.keyboard[letter.value.charCodeAt(0) - 65] = LetterStatus.GREEN;
         answerMap[letter.value!]--;
       }
       index++;
@@ -63,7 +66,10 @@ export class WordComponent implements OnInit {
     this.letters.forEach((letter: LetterComponent) => {
       if (answerMap[letter.value!] && !letter.backgroundColor) {
         letter.backgroundColor = '#FBC02D';
+        this.keyboard[letter.value!.charCodeAt(0) - 65] = LetterStatus.YELLOW;
         answerMap[letter.value!]--;
+      } else if (!letter.backgroundColor) {
+        this.keyboard[letter.value!.charCodeAt(0) - 65] = LetterStatus.INCORRECT;
       }
     });
 

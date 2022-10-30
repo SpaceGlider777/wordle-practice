@@ -1,7 +1,17 @@
 <mat-toolbar color="primary">
     <div>Wordle Unlimited</div>
-    <div>
+    <div *ngIf="!authService.username; else loggedIn">
         <button mat-button (click)="register()">Register</button>
         <button mat-button (click)="login()">Login</button>
+        <button mat-button (click)="isLoggedIn()">Test</button>
     </div>
+    <ng-template #loggedIn>
+        <div>
+            <button mat-icon-button color="accent">
+                <mat-icon>bar_chart</mat-icon>
+            </button>
+            <button mat-button>{{ authService.username }}</button>
+            <button mat-button (click)="isLoggedIn()">Test</button>
+        </div>
+    </ng-template>
 </mat-toolbar>

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Api.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var AllowedOrigins = "_allowedOrigins";
 
@@ -24,9 +25,28 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
 })
 .AddEntityFrameworkStores<WordlePracticeDbContext>();
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options => 
+    {
+        options.Cookie.Name = ".AspNetCore.Cookies";
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.SlidingExpiration = true;
+    });
+
+// builder.Services.AddAuthentication(options =>
+// {
+//     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+//     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+           
+// })
+// .AddCookie();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 // builder.Services.AddSwaggerGen();
+
+// Disable CORS error for client
 builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: AllowedOrigins,

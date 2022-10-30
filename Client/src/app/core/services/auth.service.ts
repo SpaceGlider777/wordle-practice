@@ -7,6 +7,7 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class AuthService {
+  username?: string;
 
   constructor(private apiService: ApiService, private notificationService: NotificationService) { }
 
@@ -14,13 +15,19 @@ export class AuthService {
     if (this.validate(username, password)) {
       let user: User = { username, password };
       this.apiService.post('Auth/register', user).subscribe(() => {
-        this.notificationService.show('Successfully registered');
+        this.notificationService.show('Successfully registered!');
       });
     }
   }
 
   login(username: string, password: string): void {
-
+    if (this.validate(username, password)) {
+      let user: User = { username, password };
+      this.apiService.post('Auth/login', user).subscribe(user => {
+        this.username = user.userName;
+        this.notificationService.show('Successfully logged in!');
+      });
+    }
   }
 
   validate(username: string, password: string): boolean {

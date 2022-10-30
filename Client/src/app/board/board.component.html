@@ -1,5 +1,40 @@
 <div class="word-container">
-    <app-word *ngFor="let word of iterator" #words></app-word>
+    <app-word *ngFor="let word of iterator" #words [keyboard]="keyboard"></app-word>
+</div>
+
+<div class="keyboard">
+    <div class="row">
+        <span [ngStyle]="{'background-color': letterColors[keyboard[16]]}">Q</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[22]]}">W</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[4]]}">E</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[17]]}">R</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[19]]}">T</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[24]]}">Y</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[20]]}">U</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[8]]}">I</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[14]]}">O</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[15]]}">P</span>
+    </div>
+    <div class="row">
+        <span [ngStyle]="{'background-color': letterColors[keyboard[0]]}">A</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[18]]}">S</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[3]]}">D</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[5]]}">F</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[6]]}">G</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[7]]}">H</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[9]]}">J</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[10]]}">K</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[11]]}">L</span>
+    </div>
+    <div class="row">
+        <span [ngStyle]="{'background-color': letterColors[keyboard[25]]}">Z</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[23]]}">X</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[2]]}">C</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[21]]}">V</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[1]]}">B</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[13]]}">N</span>
+        <span [ngStyle]="{'background-color': letterColors[keyboard[12]]}">M</span>
+    </div>
 </div>
 
 <div class="btn-container" *ngIf="isGameOver">

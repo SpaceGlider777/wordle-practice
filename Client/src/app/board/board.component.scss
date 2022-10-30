@@ -7,3 +7,21 @@
     display: flex;
     justify-content: center;
 }
+
+.keyboard {
+    width: min-content;
+    margin: auto;
+    color: white;
+}
+
+.row {
+    width: min-content;
+    margin: 1.5rem auto;
+}
+
+.row > span {
+    padding: 0.5rem;
+    margin: 0 0.3rem;
+    border: 1px solid white;
+    border-radius: 3px;
+}

@@ -1,3 +1,4 @@
+using System.Security.Principal;
 using Api.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -9,10 +10,12 @@ namespace Api.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
+    private readonly SignInManager<IdentityUser> _signInManager;
 
-    public AuthController(UserManager<IdentityUser> userManager)
+    public AuthController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
     {
         _userManager = userManager;
+        _signInManager = signInManager;
     }
 
     [HttpPost("register")]
@@ -39,6 +42,31 @@ public class AuthController : ControllerBase
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] RegisterModel model)
     {
-        return Ok();
+        var user = await _userManager.FindByNameAsync(model.Username);
+
+        if (user != null)
+        {
+            var result = await _signInManager.PasswordSignInAsync(user, model.Password, true, false);
+
+            if (result.Succeeded)
+            {
+                HttpContext.Items["User"] = user;
+                Console.WriteLine(User.Identity?.IsAuthenticated);
+                return Ok(user);
+            }
+
+            return Unauthorized();
+        }
+
+        return NotFound();
+    }
+
+    [HttpGet("isAuthenticated")]
+    public void IsLoggedIn()
+    {
+        Console.WriteLine(HttpContext.User.Identity?.IsAuthenticated);
+        Console.WriteLine(HttpContext.User.Identity?.Name);
+        Console.WriteLine(User.Identity?.IsAuthenticated);
+        Console.WriteLine(User.Identity?.Name);
     }
 }

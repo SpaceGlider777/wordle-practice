@@ -6,9 +6,10 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Password</mat-label>
-        <input matInput [(ngModel)]="password">
+        <input matInput [(ngModel)]="password" type="password">
     </mat-form-field>
 </div>
 <div mat-dialog-actions>
-    <button mat-stroked-button color="accent" (click)="close()">Register</button>
+    <button mat-raised-button color="accent" (click)="close()">{{ data.action }}</button>
+    <button mat-button mat-dialog-close>Cancel</button>
 </div>
