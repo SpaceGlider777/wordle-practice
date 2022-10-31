@@ -3,7 +3,7 @@
     <div *ngIf="!authService.username; else loggedIn">
         <button mat-button (click)="register()">Register</button>
         <button mat-button (click)="login()">Login</button>
-        <button mat-button (click)="isLoggedIn()">Test</button>
+        <!-- <button mat-button (click)="isLoggedIn()">Test</button> -->
     </div>
     <ng-template #loggedIn>
         <div>
@@ -11,7 +11,7 @@
                 <mat-icon>bar_chart</mat-icon>
             </button>
             <button mat-button>{{ authService.username }}</button>
-            <button mat-button (click)="isLoggedIn()">Test</button>
+            <!-- <button mat-button (click)="isLoggedIn()">Test</button> -->
         </div>
     </ng-template>
 </mat-toolbar>

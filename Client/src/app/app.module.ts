@@ -6,6 +6,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
+import { JwtModule } from '@auth0/angular-jwt';
+
+export function tokenGetter() {
+  return localStorage.getItem('jwt');
+}
 
 @NgModule({
   declarations: [
@@ -16,7 +21,14 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule,
-    SharedModule
+    SharedModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:7108'],
+        disallowedRoutes: []
+      }
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]

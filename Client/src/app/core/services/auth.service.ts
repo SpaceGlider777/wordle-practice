@@ -23,8 +23,11 @@ export class AuthService {
   login(username: string, password: string): void {
     if (this.validate(username, password)) {
       let user: User = { username, password };
-      this.apiService.post('Auth/login', user).subscribe(user => {
-        this.username = user.userName;
+      this.apiService.post('Auth/login', user).subscribe(response => {
+        console.log(response)
+        const token: string = response.token;
+        localStorage.setItem('jwt', token);
+        this.username = user.username;
         this.notificationService.show('Successfully logged in!');
       });
     }

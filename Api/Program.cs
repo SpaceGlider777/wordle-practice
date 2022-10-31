@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Api.Models;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var AllowedOrigins = "_allowedOrigins";
 
@@ -23,24 +25,28 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.SignIn.RequireConfirmedAccount = false;
 })
-.AddEntityFrameworkStores<WordlePracticeDbContext>();
+.AddEntityFrameworkStores<WordlePracticeDbContext>()
+.AddDefaultTokenProviders();
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options => 
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.SaveToken = true;
+    options.RequireHttpsMetadata = false;
+    options.TokenValidationParameters = new TokenValidationParameters()
     {
-        options.Cookie.Name = ".AspNetCore.Cookies";
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        options.SlidingExpiration = true;
-    });
-
-// builder.Services.AddAuthentication(options =>
-// {
-//     options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//     options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-//     options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-           
-// })
-// .AddCookie();
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidAudience = builder.Configuration.GetValue<String>("JWT:ValidAudience"),
+        ValidIssuer = builder.Configuration.GetValue<String>("JWT:ValidIssuer"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<String>("JWT:Secret")))
+    };
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
